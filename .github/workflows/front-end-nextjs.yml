@@ -3,7 +3,7 @@ name: Build and Push Frontend Image
 on:
   push:
     paths:
-      - '/devops-qr-code/front-end-nextjs/**'  # Trigger if any file in the frontend/ directory changes
+      - 'devops-qr-code/front-end-nextjs/**'  # Trigger if any file in the frontend/ directory changes
   workflow_dispatch:  # Allows manual triggering of the workflow
 
 jobs:
