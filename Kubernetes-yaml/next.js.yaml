@@ -1,0 +1,44 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nextjs-deployment            # Name of the deployment
+  labels:
+    app: nextjs                      # Label to identify the deployment
+spec:
+  replicas: 3                       # Number of pod replicas to run
+  selector:
+    matchLabels:
+      app: nextjs                  # Label selector to match pods managed by this deployment
+  template:
+    metadata:
+      labels:
+        app: nextjs                # Labels to apply to the pods created by this deployment
+    spec:
+      containers:
+      - name: nextjs               # Container name
+        image: acralextestproject.azurecr.io/front-end-nextjs:latest  # Docker image from Azure Container Registry
+        ports:
+        - containerPort: 3000       # Port the container exposes
+        env:
+        - name: NODE_ENV            # Environment variable for Node.js environment
+          value: "production"      # Set Node.js environment to production
+        - name: PORT                # Environment variable for the port Node.js will listen on
+          value: "3000"            # Set the port to 3000
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: nextjs-service               # Name of the service
+  labels:
+    app: nextjs                      # Label to identify the service
+spec:
+  type: LoadBalancer                # Service type that exposes the service externally using a cloud load balancer
+  ports:
+  - port: 80                        # Port that the service will expose to the outside world
+    targetPort: 3000                # Port on the container to forward traffic to
+    protocol: TCP                   # Protocol used for the service
+  selector:
+    app: nextjs

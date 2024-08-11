@@ -1,0 +1,24 @@
+# Use the official Node.js image
+FROM node:latest
+
+# Set the working directory
+WORKDIR /app
+
+# Copy the entire project to the container's working directory
+COPY package.json .
+
+# Install dependencies
+RUN npm install
+RUN npm install tailwindcss postcss autoprefixer
+
+# Copy the entire project to the container's working directory
+COPY . .
+
+RUN npx tailwindcss init
+RUN npm install postcss-loader
+
+# Expose the application port
+EXPOSE 3000
+
+# Command to run the Next.js development server
+CMD ["npm", "run", "dev"]
