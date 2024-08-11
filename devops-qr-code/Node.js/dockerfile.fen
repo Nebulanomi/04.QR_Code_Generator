@@ -14,8 +14,8 @@ RUN npm install tailwindcss postcss autoprefixer
 # Copy the entire project to the container's working directory
 COPY . .
 
-RUN npx tailwindcss init
-RUN npm install postcss-loader
+RUN npx tailwindcss init -p
+RUN npm run dev
 
 # Expose the application port
 EXPOSE 3000
