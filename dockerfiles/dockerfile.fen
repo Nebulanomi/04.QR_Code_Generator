@@ -5,10 +5,13 @@ FROM node:latest
 WORKDIR /app
 
 # Copy the entire project to the container's working directory
-COPY . .
+COPY package.json .
 
 # Install dependencies
 RUN npm install
+
+# Copy the entire project to the container's working directory
+COPY . .
 
 # Expose the application port
 EXPOSE 3000
