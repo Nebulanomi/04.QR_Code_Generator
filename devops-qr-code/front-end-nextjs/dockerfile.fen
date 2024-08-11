@@ -13,9 +13,6 @@ RUN npm install
 # Copy the entire project to the container's working directory
 COPY . .
 
-# Ensure the .next directory is included
-COPY .next ./.next
-
 # Expose the application port
 EXPOSE 3000
 
