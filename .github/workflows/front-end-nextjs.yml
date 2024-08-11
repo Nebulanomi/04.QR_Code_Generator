@@ -29,6 +29,6 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           context: ./devops-qr-code/front-end-nextjs/
-          file: .dockerfile.fen
+          file: ./devops-qr-code/front-end-nextjs/dockerfile.fen
           push: true
           tags: acralextestproject.azurecr.io/front-end-nextjs:latest
