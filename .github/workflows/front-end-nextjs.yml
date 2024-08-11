@@ -4,7 +4,6 @@ on:
   push:
     paths:
       - 'devops-qr-code/front-end-nextjs/**'  # Trigger if any file in the frontend/ directory changes
-      - 'dockerfiles/dockerfile.fen'  # Trigger if the dockerfile changes
     
   workflow_dispatch:  # Allows manual triggering of the workflow
 

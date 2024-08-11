@@ -4,7 +4,6 @@ on:
   push:
     paths:
       - 'devops-qr-code/api/**'  # Trigger if any file in the api/ directory changes
-      - 'dockerfiles/dockerfile.api'  # Trigger if the dockerfile changes
       
   workflow_dispatch:  # Allows manual triggering of the workflow
 
