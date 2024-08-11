@@ -4,11 +4,11 @@ FROM node:latest
 # Set the working directory
 WORKDIR /app
 
-# Install dependencies
-RUN npm install
-
 # Copy the entire project to the container's working directory
 COPY . .
+
+# Install dependencies
+RUN npm install
 
 # Expose the application port
 EXPOSE 3000
