@@ -28,7 +28,7 @@ jobs:
       - name: Build and push API image
         uses: docker/build-push-action@v2
         with:
-          context: ./devops-qr-code/api/
-          file: ./devops-qr-code/api/dockerfile.api
+          context: ./devops-qr-code/FastAPI/
+          file: ./devops-qr-code/FastAPI/dockerfile.api
           push: true
           tags: acralextestproject.azurecr.io/api:latest

@@ -28,7 +28,7 @@ jobs:
       - name: Build and push Frontend image
         uses: docker/build-push-action@v2
         with:
-          context: ./devops-qr-code/front-end-nextjs/
-          file: ./devops-qr-code/front-end-nextjs/dockerfile.fen
+          context: ./devops-qr-code/Mode.js/
+          file: ./devops-qr-code/Node.js/dockerfile.fen
           push: true
           tags: acralextestproject.azurecr.io/front-end-nextjs:latest
