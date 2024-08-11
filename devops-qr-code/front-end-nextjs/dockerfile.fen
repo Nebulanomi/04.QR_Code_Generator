@@ -4,9 +4,6 @@ FROM node:latest
 # Set the working directory
 WORKDIR /app
 
-# Copy the package.json from the .next directory
-COPY .next/package.json .
-
 # Install dependencies
 RUN npm install
 
