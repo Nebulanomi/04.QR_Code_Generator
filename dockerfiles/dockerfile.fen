@@ -5,7 +5,7 @@ FROM node:latest
 WORKDIR /app
 
 # Copy the entire project to the container's working directory
-COPY /devops-qr-code/front-end-nextjs/package.json .
+COPY "\devops-qr-code\front-end-nextjs\package.json" .
 
 # Install dependencies
 RUN npm install
