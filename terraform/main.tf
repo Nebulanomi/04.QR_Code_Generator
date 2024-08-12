@@ -6,14 +6,14 @@ resource "random_pet" "rg_name" {
 # Create the RG with its unique ID
 resource "azurerm_resource_group" "rg" {
   location = var.resource_group_location
-  name = random_pet.rg_name.id
-  tags = {
-    "Budget" = "10€",
+  name     = random_pet.rg_name.id
+  tags     = {
+    "Budget"              = "10€",
     "Data classification" = "Private",
-    "End date" = "Never",
-    "Owner" = "Alexandre Pereira",
-    "Secondary owner" = "None",
-    "Team name" = "None",
+    "End date"            = "Never",
+    "Owner"               = "Alexandre Pereira",
+    "Secondary owner"     = "None",
+    "Team name"           = "None",
   }
 }
 
@@ -80,9 +80,11 @@ resource "azurerm_kubernetes_flux_configuration" "aks-fc" {
   namespace  = "qr-app"
 
   git_repository {
-    url             = "https://github.com/Nebulanomi/04.-QR-Code-Generator-"
-    reference_type  = "branch"
-    reference_value = "main"
+    url              = var.url
+    reference_type   = var.reference_type
+    reference_value  = var.reference_value
+    https_user       = var.https_user
+    https_key_base64 = var.https_key_base64
   }
 
 # Define the namespace resource
