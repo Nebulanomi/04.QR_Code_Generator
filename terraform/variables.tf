@@ -41,25 +41,20 @@ variable "resource_group_name_prefix" {
 
 variable "url" {
   type        = string
-  default     = "rg"
 }
 
 variable "reference_type" {
   type        = string
-  default     = "rg"
 }
 
 variable "reference_value" {
   type        = string
-  default     = "rg"
 }
 
 variable "https_user" {
   type        = string
-  default     = "rg"
 }
 
 variable "https_key_base64" {
   type        = string
-  default     = "rg"
 }
