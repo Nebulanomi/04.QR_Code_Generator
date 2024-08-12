@@ -9,10 +9,10 @@ terraform {
   }
 
   backend "azurerm" {
-      resource_group_name  = var.resource_group_name
-      storage_account_name = var.storage_account_name
-      container_name       = var.container_name
-      key                  = var.key
+      resource_group_name  = "rg-tfstate"
+      storage_account_name = "satsstoragealex"
+      container_name       = "tfstate"
+      key                  = "NiRMJ4RbraIVVEcbUW7R9aI1CpexJRl+YV9bouDZZzuu/LtGX3EgbHWdcbA9F1spSe16zTkWL2rW+AStnETCPw=="
 }
   }
 }
