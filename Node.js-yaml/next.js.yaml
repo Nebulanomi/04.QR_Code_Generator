@@ -3,6 +3,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: nextjs-deployment            # Name of the deployment
+  namespace: qr-app                  # Name of the namespace
   labels:
     app: nextjs                      # Label to identify the deployment
 spec:

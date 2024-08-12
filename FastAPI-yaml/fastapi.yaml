@@ -3,6 +3,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: fastapi-deployment          # Name of the deployment
+  namespace: qr-app                  # Name of the namespace
   labels:
     app: fastapi                    # Label to identify the deployment
 spec:
