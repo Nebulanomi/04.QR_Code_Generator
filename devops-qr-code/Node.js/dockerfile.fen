@@ -15,7 +15,6 @@ RUN npm install tailwindcss postcss autoprefixer
 COPY . .
 
 RUN npx tailwindcss init -p
-RUN npm run dev
 
 # Expose the application port
 EXPOSE 3000
