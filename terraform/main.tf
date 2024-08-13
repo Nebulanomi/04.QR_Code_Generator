@@ -19,29 +19,33 @@ resource "azurerm_resource_group" "rg" {
 
 # Create ACR
 resource "azurerm_container_registry" "acr" {
-  name                = "acralextest"
+  name                = "aksalextestmetyis"
   resource_group_name = azurerm_resource_group.rg.name
   location            = azurerm_resource_group.rg.location
   sku                 = "Basic"
   admin_enabled       = true
-  georeplications {
-    location                = "West Europe"
-    zone_redundancy_enabled = true
-    tags                    = {}
-  }
-  georeplications {
-    location                = "North Europe"
-    zone_redundancy_enabled = true
-    tags                    = {}
-  }
+}
+
+# Create a prefix for AKS
+resource "random_pet" "azurerm_kubernetes_cluster_name" {
+  prefix = "cluster"
+}
+
+# Create a prefix for AKS DNS
+resource "random_pet" "azurerm_kubernetes_cluster_dns_prefix" {
+  prefix = "dns"
 }
 
 # Create AKS
 resource "azurerm_kubernetes_cluster" "aks" {
-  name                = "aksalextest"
+  name                = random_pet.azurerm_kubernetes_cluster_name.id
   location            = azurerm_resource_group.rg.location
   resource_group_name = azurerm_resource_group.rg.name
-  dns_prefix          = "aksalextest"
+  dns_prefix          = random_pet.azurerm_kubernetes_cluster_dns_prefix.id
+
+  identity {
+    type = "SystemAssigned"
+  }
 
   default_node_pool {
     name       = "default"
@@ -49,12 +53,17 @@ resource "azurerm_kubernetes_cluster" "aks" {
     vm_size    = "Standard_D2_v2"
   }
 
-  identity {
-    type = "SystemAssigned"
+  linux_profile {
+    admin_username = var.username
+
+    ssh_key {
+      key_data = azapi_resource_action.ssh_public_key_gen.output.publicKey
+    }
   }
 
-  tags = {
-    Environment = "Production"
+  network_profile {
+  network_plugin    = "kubenet"
+  load_balancer_sku = "standard"
   }
 }
 
@@ -64,6 +73,13 @@ resource "azurerm_role_assignment" "aks-role" {
   role_definition_name             = "AcrPull"
   scope                            = azurerm_container_registry.acr.id
   skip_service_principal_aad_check = true
+}
+
+# Define the namespace resource
+resource "kubernetes_namespace" "ns-app" {
+  metadata {
+    name = "qr-app"
+  }
 }
 
 # Add the flux extension to AKS
@@ -83,46 +99,13 @@ resource "azurerm_kubernetes_flux_configuration" "aks-fc" {
     url              = var.url
     reference_type   = var.reference_type
     reference_value  = var.reference_value
-    https_user       = var.https_user
-    https_key_base64 = var.https_key_base64
   }
 
-# Define the namespace resource
-resource "kubernetes_namespace" "app-ns" {
-  metadata {
-    name = "qr-app"
-  }
-}
-
-  kustomizations {
-    fastapi {
-      path = "./FastAPI-yaml"
-    }
-
-    nodejs {
-      path = "./Node.js-yaml"
-    }
+    kustomizations {
+    name = "kustomization-git"
   }
 
-  depends_on = [
+    depends_on = [
     azurerm_kubernetes_cluster_extension.aks-ext
-  ]
-}
-
-# Add Grafana to monitor
-resource "azurerm_dashboard_grafana" "aks-graf" {
-  name                              = "aksagrafatest"
-  resource_group_name               = azurerm_resource_group.aks.name
-  location                          = "West Europe"
-  api_key_enabled                   = true
-  deterministic_outbound_ip_enabled = true
-  public_network_access_enabled     = false
-
-  identity {
-    type = "SystemAssigned"
-  }
-
-  tags = {
-    key = "value"
-  }
+    ]
 }

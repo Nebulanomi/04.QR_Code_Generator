@@ -1,44 +1,62 @@
 # Service Principal variables
 variable "subscription_id" {
   description = "The Azure subscription ID"
-  type= string
+  type        = string
 }
 
 variable "client_id" {
   description = "The Service principal client ID"
-  type= string
+  type        = string
 }
 
 variable "client_secret" {
   description = "The Service principal client secret"
-  type= string
+  type        = string
   sensitive   = true
 }
 
 variable "tenant_id" {
   description = "The Azure Entra ID tenant ID"
-  type= string
-}
-
-variable "replicationType" {
-  description = "The type of replication"
   type        = string
-  default     = "LRS"
 }
 
 # RG variables
 variable "resource_group_location" {
   type        = string
-  default     = "West Europe"
   description = "Location of the resource group."
 }
 
 variable "resource_group_name_prefix" {
   type        = string
-  default     = "rg"
   description = "Prefix of the resource group name that's combined with a random ID so name is unique in your Azure subscription."
 }
 
+# ACR variables
+variable "acrusername" {
+  type        = string
+  description = "The admin username for the new cluster."
+}
+
+variable "acrpassword" {
+  type        = string
+  description = "The admin username for the new cluster."
+  sensitive   = true
+}
+
+# AKS variables
+variable "node_count" {
+  type        = number
+  description = "The initial quantity of nodes for the node pool."
+  default     = 3
+}
+
+variable "username" {
+  type        = string
+  description = "The admin username for the new cluster."
+  default     = "azureadmin"
+}
+
+# Git variables
 variable "url" {
   type        = string
 }
@@ -48,13 +66,5 @@ variable "reference_type" {
 }
 
 variable "reference_value" {
-  type        = string
-}
-
-variable "https_user" {
-  type        = string
-}
-
-variable "https_key_base64" {
   type        = string
 }
