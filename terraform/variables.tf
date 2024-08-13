@@ -1,4 +1,22 @@
-# Service Principal variables
+# Backed storage account
+variable "resource_group_name" {
+  type        = string
+}
+
+variable "storage_account_name" {
+  type        = string
+}
+
+variable "container_name" {
+  type        = string
+}
+
+variable "key" {
+  type        = string
+}
+
+
+# Service principal variables
 variable "subscription_id" {
   description = "The Azure subscription ID"
   type        = string
