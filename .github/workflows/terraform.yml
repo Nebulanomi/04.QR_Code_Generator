@@ -13,6 +13,11 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
+      - name: Log in to Azure
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v1
         with:
@@ -29,12 +34,7 @@ jobs:
           TF_VAR_storage_account_name: ${{ storage_account_name }}
           TF_VAR_container_name: ${{ container_name }}
           TF_VAR_key: ${{ key }}
-          TF_VAR_subscription_id: ${{ subscription_id }}
-        
-          TF_VAR_client_id: ${{ client_id }}
-          TF_VAR_client_secret: ${{ client_secret }}
-          TF_VAR_tenant_id: ${{ tenant_id }}
-
+          
           TF_VAR_url: ${{ url }}
           TF_VAR_reference_type: ${{ reference_type }}
           TF_VAR_reference_value: ${{ reference_value }}
