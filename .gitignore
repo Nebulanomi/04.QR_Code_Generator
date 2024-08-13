@@ -8,4 +8,4 @@
 base.dot
 
 #
-variables.tf
+variables.tfvars
