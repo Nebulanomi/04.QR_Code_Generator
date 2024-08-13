@@ -17,8 +17,6 @@ jobs:
     steps:
       - uses: actions/checkout@v1
       - name: Copy terraform files
-        with:
-          path: repo
 
       - name: Log in to Azure
         uses: azure/login@v1
