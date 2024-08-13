@@ -28,6 +28,9 @@ jobs:
       - name: Terraform Init
         run: terraform init --upgrade
 
+      - name: Terraform Plan
+        run: terraform plan -out main.tfplan
+
       - name: Terraform Apply
         env:
           TF_VAR_api_key: ${{ secrets.API_KEY }}
@@ -38,4 +41,4 @@ jobs:
           TF_VAR_key: ${{ secrets.key }}
           TF_VAR_url: ${{ secrets.url }}
           
-        run: terraform apply -auto-approve
+        run: terraform apply main.tfplan -auto-approve
