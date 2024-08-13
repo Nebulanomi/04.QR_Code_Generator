@@ -34,9 +34,6 @@ jobs:
           TF_VAR_storage_account_name: ${{ storage_account_name }}
           TF_VAR_container_name: ${{ container_name }}
           TF_VAR_key: ${{ key }}
-          
           TF_VAR_url: ${{ url }}
-          TF_VAR_reference_type: ${{ reference_type }}
-          TF_VAR_reference_value: ${{ reference_value }}
           
         run: terraform apply -auto-approve
