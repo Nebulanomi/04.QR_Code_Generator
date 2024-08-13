@@ -14,8 +14,8 @@ jobs:
     steps:
       - uses: actions/checkout@v1
       - name: Copy terraform files
-        run: |
-          cd terraform
+        with:
+          path: repo
 
       - name: Log in to Azure
         uses: azure/login@v1
@@ -28,6 +28,7 @@ jobs:
           terraform_version: 1.0.0
 
       - name: Terraform Init
+        working-directory: repo/terraform
         run: terraform init --upgrade
 
       - name: Terraform Plan
