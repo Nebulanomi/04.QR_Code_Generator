@@ -10,6 +10,9 @@ on:
 jobs:
   terraform:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./terraform
 
     steps:
       - uses: actions/checkout@v1
@@ -28,7 +31,6 @@ jobs:
           terraform_version: 1.0.0
 
       - name: Terraform Init
-        working-directory: repo/terraform
         run: terraform init --upgrade
 
       - name: Terraform Plan
