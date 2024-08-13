@@ -8,10 +8,6 @@ tenant_id            = "d3d402ef-42d8-4c14-a5dd-09fc49aaef4b"
 resource_group_name_prefix = "rg"
 resource_group_location = "North Europe"
 
-# ACR variables
-acrusername = "aksalextestmetyis"
-acrpassword = "eRaGPytNwSvOfOc34nEbVFI0IV6kb2vLCZf2EzbW4B+ACRCKtvEX"
-
 # Git variables
 url              = "https://github.com/Nebulanomi/04.-QR-Code-Generator-/tree/main/Node.js-yaml"
 reference_type   = "branch"
