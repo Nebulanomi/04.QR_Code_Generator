@@ -80,9 +80,11 @@ variable "url" {
 }
 
 variable "reference_type" {
+  default     = "branch"
   type        = string
 }
 
 variable "reference_value" {
+  default     = "main"
   type        = string
 }
