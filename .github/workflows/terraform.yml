@@ -5,6 +5,8 @@ on:
     branches:
       - main
 
+  workflow_dispatch:  # Allows manual triggering of the workflow
+
 jobs:
   terraform:
     runs-on: ubuntu-latest
