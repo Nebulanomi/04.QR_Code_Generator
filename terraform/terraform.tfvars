@@ -10,5 +10,5 @@ resource_group_location = "North Europe"
 
 # Git variables
 url              = "https://github.com/Nebulanomi/04.-QR-Code-Generator-/tree/main/Node.js-yaml"
-#reference_type   = "branch"
+reference_type   = "branch"
 reference_value  = "main"
