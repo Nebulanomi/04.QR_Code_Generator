@@ -6,7 +6,10 @@ on:
       - 'devops-qr-code/front-end-nextjs/**'  # Trigger if any file in the frontend/ directory changes
     
   workflow_dispatch:  # Allows manual triggering of the workflow
-
+  workflow_run:
+    workflows: ["Terraform Deployment"]
+    types:
+      - completed
 jobs:
   build-and-push-frontend:
     runs-on: ubuntu-latest
