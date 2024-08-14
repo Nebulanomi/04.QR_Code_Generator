@@ -19,7 +19,7 @@ jobs:
       - name: Setup and run tests
         working-directory: ./terraform
         run: |
-          cp . .
+          cp -r . .
             
       - name: Log in to Azure
         uses: azure/login@v1
