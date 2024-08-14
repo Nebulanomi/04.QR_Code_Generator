@@ -1,13 +1,6 @@
 name: Terraform Destroy
 
 on:
-  push:
-    branches:
-      - main
-    paths:
-      - 'terraform/**'  # Trigger on changes within the terraform directory
-      - '.github/workflows/terraform.yml'  # Trigger on changes to this workflow file
-
   workflow_dispatch:  # Allow manual triggering of the workflow
 
 jobs:
@@ -65,7 +58,7 @@ jobs:
       - name: Terraform Init
         id: init
         run: |
-          terraform init \
+          terraform init -migrate-state \
             -backend-config="resource_group_name=${{ secrets.RESOURCE_GROUP_NAME }}" \
             -backend-config="storage_account_name=${{ secrets.STORAGE_ACCOUNT_NAME }}" \
             -backend-config="container_name=${{ secrets.CONTAINER_NAME }}" \
