@@ -90,3 +90,4 @@ jobs:
         env:
           ARM_CLIENT_ID: ${{ secrets.CLIENT_ID }}
           ARM_CLIENT_SECRET: ${{ secrets.CLIENT_SECRET }}
+        run: terraform apply -auto-approve main.tfplan
