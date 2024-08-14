@@ -26,9 +26,10 @@ jobs:
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v1
 
-      #- name: Terraform Format
-       # id: fmt
-        #run: terraform fmt -check
+      # Uncomment if you want to check formatting
+      # - name: Terraform Format
+      #   id: fmt
+      #   run: terraform fmt -check
 
       - name: Terraform Init
         id: init
@@ -66,8 +67,8 @@ jobs:
             -var="storage_account_name=${{ secrets.STORAGE_ACCOUNT_NAME }}" \
             -var="container_name=${{ secrets.CONTAINER_NAME }}" \
             -var="key=${{ secrets.KEY }}" \
-            -var="resource_group_location= "West Europe" \
-            -var="resource_group_name_prefix= "rg" \
+            -var="resource_group_location=West Europe" \
+            -var="resource_group_name_prefix=rg" \
             -var="acrusername=${{ secrets.ACR_USERNAME }}" \
             -var="acrpassword=${{ secrets.ACR_PASSWORD }}" \
             -var="url=${{ secrets.URL }}"
