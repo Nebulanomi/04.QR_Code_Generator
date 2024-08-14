@@ -19,8 +19,7 @@ env:
 jobs:
   terraform:
     runs-on: ubuntu-latest
-    # Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest, macos-latest, or windows-latest
-    # Set the working directory to vnet for the config files
+
     defaults:
       run:
         shell: bash
@@ -28,8 +27,7 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
-      - name: Setup and run tests
-            
+
       - name: Log in to Azure
         uses: azure/login@v1
         with:
@@ -45,11 +43,6 @@ jobs:
 
       - name: Terraform Plan
         run: terraform plan -out main.tfplan
-        env:
-          client_id: ${{ secrets.client_id }}
-          client_secret: ${{ secrets.client_secret }}
-          tenant_id: ${{ secrets.tenant_id }}
-          subscription_id: ${{ secrets.subscription_id }}
 
       - name: Terraform Apply
         run: terraform apply main.tfplan -auto-approve
