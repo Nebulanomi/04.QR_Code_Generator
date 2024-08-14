@@ -6,7 +6,10 @@ on:
       - 'devops-qr-code/api/**'  # Trigger if any file in the api/ directory changes
       
   workflow_dispatch:  # Allows manual triggering of the workflow
-
+  workflow_run:
+    workflows: ["Terraform Deployment"]
+    types:
+      - completed
 jobs:
   build-and-push-api:
     runs-on: ubuntu-latest
