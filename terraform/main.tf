@@ -26,10 +26,10 @@ resource "random_id" "acr_name" {
 
 # Create ACR
 resource "azurerm_container_registry" "acr" {
-  name                = "acr-${random_id.acr_name.hex}"
-  location            = azurerm_resource_group.rg.location
-  sku                 = "Basic"
-  admin_enabled       = true
+  name          = "acr-${random_id.acr_name.hex}"
+  location      = azurerm_resource_group.rg.location
+  sku           = "Basic"
+  admin_enabled = true
 }
 
 # Create a prefix for AKS
