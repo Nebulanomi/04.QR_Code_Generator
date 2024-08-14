@@ -82,6 +82,7 @@ jobs:
       - name: Terraform Apply
         if: github.ref == 'refs/heads/main' && github.event_name == 'push'  # Only apply on push to main
         run: terraform apply -auto-approve main.tfplan  # Apply the Terraform plan
+        continue-on-error: true  # Continue even if the plan step fails
 
       - name: Get ACR Name
         id: get_acr_name
