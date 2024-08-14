@@ -13,11 +13,14 @@ jobs:
     defaults:
       run:
         working-directory: ./terraform
-
+    
     steps:
       - uses: actions/checkout@v1
-      - name: Copy terraform files
-
+      - name: Setup and run tests
+        working-directory: ./terraform
+        run: |
+          cp . .
+            
       - name: Log in to Azure
         uses: azure/login@v1
         with:
@@ -43,5 +46,4 @@ jobs:
           TF_VAR_container_name: ${{ secrets.container_name }}
           TF_VAR_key: ${{ secrets.key }}
           TF_VAR_url: ${{ secrets.url }}
-          
         run: terraform apply main.tfplan -auto-approve
