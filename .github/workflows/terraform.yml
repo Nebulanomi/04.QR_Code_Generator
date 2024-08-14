@@ -17,14 +17,14 @@ env:
   TF_VAR_url: ${{ secrets.url }}
 
 jobs:
-   terraform:
+  terraform:
     runs-on: ubuntu-latest
     # Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest, macos-latest, or windows-latest
     # Set the working directory to vnet for the config files
     defaults:
-        run:
-          shell: bash
-          working-directory: ./vnet
+      run:
+        shell: bash
+        working-directory: ./terraform
 
     steps:
       - uses: actions/checkout@v3
