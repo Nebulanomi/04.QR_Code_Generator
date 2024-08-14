@@ -7,19 +7,28 @@ on:
 
   workflow_dispatch:  # Allows manual triggering of the workflow
 
+env:
+  TF_VAR_api_key: ${{ secrets.API_KEY }}
+  TF_VAR_private_key: ${{ secrets.PRIVATE_KEY }}
+  TF_VAR_resource_group_name: ${{ secrets.resource_group_name }}
+  TF_VAR_storage_account_name: ${{ secrets.storage_account_name }}
+  TF_VAR_container_name: ${{ secrets.container_name }}
+  TF_VAR_key: ${{ secrets.key }}
+  TF_VAR_url: ${{ secrets.url }}
+
 jobs:
-  terraform:
+   terraform:
     runs-on: ubuntu-latest
+    # Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest, macos-latest, or windows-latest
+    # Set the working directory to vnet for the config files
     defaults:
-      run:
-        working-directory: ./terraform
-    
+        run:
+          shell: bash
+          working-directory: ./vnet
+
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v3
       - name: Setup and run tests
-        working-directory: ./terraform
-        run: |
-          cp -r . .
             
       - name: Log in to Azure
         uses: azure/login@v1
@@ -36,14 +45,11 @@ jobs:
 
       - name: Terraform Plan
         run: terraform plan -out main.tfplan
+        env:
+          ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}
+          ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
+          ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
+          ARM_SUBSCRIPTION_ID: ${{ secrets.ARM_SUBSCRIPTION_ID }}
 
       - name: Terraform Apply
-        env:
-          TF_VAR_api_key: ${{ secrets.API_KEY }}
-          TF_VAR_private_key: ${{ secrets.PRIVATE_KEY }}
-          TF_VAR_resource_group_name: ${{ secrets.resource_group_name }}
-          TF_VAR_storage_account_name: ${{ secrets.storage_account_name }}
-          TF_VAR_container_name: ${{ secrets.container_name }}
-          TF_VAR_key: ${{ secrets.key }}
-          TF_VAR_url: ${{ secrets.url }}
         run: terraform apply main.tfplan -auto-approve
