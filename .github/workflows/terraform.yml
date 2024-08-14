@@ -88,4 +88,4 @@ jobs:
           ARM_CLIENT_SECRET: ${{ secrets.CLIENT_SECRET }}
           ARM_SUBSCRIPTION_ID: ${{ secrets.SUBSCRIPTION_ID }}
           ARM_TENANT_ID: ${{ secrets.TENANT_ID }}
-        run: terraform apply main.tfplan -auto-approve
+        run: terraform apply -auto-approve main.tfplan
