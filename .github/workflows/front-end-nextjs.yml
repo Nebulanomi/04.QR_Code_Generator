@@ -10,10 +10,12 @@ on:
     workflows: ["Terraform Deployment"]
     types:
       - completed
- 
+
 jobs:
   build-and-push-frontend:
     runs-on: ubuntu-latest
+    env:
+      ACR_USER: ${{ secrets.ACR_NAME }}
 
     steps:
       - name: Check out the code
@@ -25,9 +27,9 @@ jobs:
       - name: Log in to Azure Container Registry
         uses: docker/login-action@v2
         with:
-          registry: ${{ secrets[env.ACR_NAME] }}.azurecr.io
-          username: ${{ secrets[env.ACR_USERNAME] }}
-          password: ${{ secrets[env.ACR_PASSWORD] }}
+          registry: ${{ env.ACR_NAME }}.azurecr.io
+          username: ${{ env.ACR_USERNAME }}
+          password: ${{ env.ACR_PASSWORD }}
 
       - name: Build and push Frontend image
         uses: docker/build-push-action@v4
@@ -35,4 +37,4 @@ jobs:
           context: ./devops-qr-code/Node.js/
           file: ./devops-qr-code/Node.js/dockerfile.fen
           push: true
-          tags: ${{ secrets[env.ACR_NAME] }}.azurecr.io/front-end-nextjs:latest
+          tags: ${{ env.ACR_NAME }}.azurecr.io/front-end-nextjs:latest
