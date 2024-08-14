@@ -46,10 +46,10 @@ jobs:
       - name: Terraform Plan
         run: terraform plan -out main.tfplan
         env:
-          ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}
-          ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
-          ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
-          ARM_SUBSCRIPTION_ID: ${{ secrets.ARM_SUBSCRIPTION_ID }}
+          client_id: ${{ secrets.client_id }}
+          client_secret: ${{ secrets.client_secret }}
+          tenant_id: ${{ secrets.tenant_id }}
+          subscription_id: ${{ secrets.subscription_id }}
 
       - name: Terraform Apply
         run: terraform apply main.tfplan -auto-approve
