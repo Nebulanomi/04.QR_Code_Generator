@@ -60,7 +60,17 @@ jobs:
           ARM_CLIENT_SECRET: ${{ secrets.CLIENT_SECRET }}
           ARM_SUBSCRIPTION_ID: ${{ secrets.SUBSCRIPTION_ID }}
           ARM_TENANT_ID: ${{ secrets.TENANT_ID }}
-        run: terraform plan -no-color -input=false -out=main.tfplan
+        run: |
+          terraform plan -no-color -input=false -out=main.tfplan \
+            -var="resource_group_name=${{ secrets.RESOURCE_GROUP_NAME }}" \
+            -var="storage_account_name=${{ secrets.STORAGE_ACCOUNT_NAME }}" \
+            -var="container_name=${{ secrets.CONTAINER_NAME }}" \
+            -var="key=${{ secrets.KEY }}" \
+            -var="resource_group_location= "West Europe" \
+            -var="resource_group_name_prefix= "rg" \
+            -var="acrusername=${{ secrets.ACR_USERNAME }}" \
+            -var="acrpassword=${{ secrets.ACR_PASSWORD }}" \
+            -var="url=${{ secrets.URL }}"
         continue-on-error: true
 
       - name: Terraform Apply
