@@ -24,7 +24,7 @@ jobs:
       - name: Log in to Azure Container Registry
         uses: docker/login-action@v1
         with:
-          registry: acralextestproject.azurecr.io
+          registry: ${{ ACR_NAME }}.azurecr.io
           username: ${{ secrets.ACR_USERNAME }}
           password: ${{ secrets.ACR_PASSWORD }}
 
@@ -34,4 +34,4 @@ jobs:
           context: ./devops-qr-code/FastAPI/
           file: ./devops-qr-code/FastAPI/dockerfile.api
           push: true
-          tags: acralextestproject.azurecr.io/api:latest
+          tags: ${{ ACR_NAME }}.azurecr.io/api:latest
