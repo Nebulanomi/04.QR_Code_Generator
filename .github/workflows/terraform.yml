@@ -27,8 +27,8 @@ jobs:
           TF_VAR_resource_group_location: "West Europe"
           TF_VAR_resource_group_name_prefix: "rg"
             
-          TF_VAR_acr_username: ${{ secrets.ACR_USERNAME }}
-          TF_VAR_acr_password: ${{ secrets.ACR_PASSWORD }}
+          TF_VAR_acrusername: ${{ secrets.ACR_USERNAME }}
+          TF_VAR_acrpassword: ${{ secrets.ACR_PASSWORD }}
             
           TF_VAR_url: ${{ secrets.URL }}"
         
