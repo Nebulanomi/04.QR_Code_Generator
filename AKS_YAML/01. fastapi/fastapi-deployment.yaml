@@ -1,27 +1,32 @@
 apiVersion: apps/v1
 kind: Deployment
+
 metadata:
   name: fastapi-deployment          # Name of the deployment
   namespace: qr-app                  # Name of the namespace
   labels:
     app: fastapi                    # Label to identify the deployment
+      
 spec:
   replicas: 3                       # Number of pod replicas to run
   selector:
     matchLabels:
       app: fastapi                  # Label selector to match pods managed by this deployment
+      
   template:
     metadata:
       labels:
         app: fastapi                # Labels to apply to the pods created by this deployment
+        
     spec:
       containers:
       - name: fastapi               # Container name
-        image: acralextestproject.azurecr.io/api:latest  # Docker image from Azure Container Registry
+        image: acra1fa91b3.azurecr.io/api:latest  # Docker image from Azure Container Registry
         ports:
         - containerPort: 8000       # Port the container exposes
         env:
         - name: UVICORN_HOST        # Environment variable for Uvicorn host
           value: "0.0.0.0"          # Uvicorn will listen on all network interfaces
+          
         - name: UVICORN_PORT        # Environment variable for Uvicorn port
           value: "8000"            # Uvicorn will listen on port 8000
