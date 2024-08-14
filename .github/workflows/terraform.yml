@@ -36,16 +36,14 @@ jobs:
 
       - name: Terraform Init
         run: |
-         tf_actions_version: 0.12.13
          tf_actions_subcommand: "init"
          args: -var="resource_group_name=${{ secrets.RESOURCE_GROUP_NAME }}"
                -var="storage_account_name=${{ secrets.STORAGE_ACCOUNT_NAME }}" 
                -var="container_name=${{ secrets.CONTAINER_NAME }}"
                -var="key=${{ secrets.BACKEND_KEY }}" 
     
-      - name: "Terraform Plan"    
+      - name: Terraform Plan  
         run: |
-         tf_actions_version: 0.12.13
          tf_actions_subcommand: "plan"
          args: -var="client_secret=${{ secrets.CLIENT_SECRET }}"
                -var="client_id=${{ secrets.CLIENT_ID }}"
