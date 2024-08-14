@@ -10,28 +10,31 @@ on:
     workflows: ["Terraform Deployment"]
     types:
       - completed
+ 
 jobs:
   build-and-push-frontend:
     runs-on: ubuntu-latest
+    env:
+      ACR_NAME: ${{ secrets.ACR_NAME }}  # Use the secret for the ACR name
 
     steps:
       - name: Check out the code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v1
+        uses: docker/setup-buildx-action@v2
 
       - name: Log in to Azure Container Registry
-        uses: docker/login-action@v1
+        uses: docker/login-action@v2
         with:
-          registry: ${{ secrets.ACR_NAME }}.azurecr.io
+          registry: ${{ env.ACR_NAME }}.azurecr.io
           username: ${{ secrets.ACR_USERNAME }}
           password: ${{ secrets.ACR_PASSWORD }}
 
       - name: Build and push Frontend image
-        uses: docker/build-push-action@v2
+        uses: docker/build-push-action@v4
         with:
           context: ./devops-qr-code/Node.js/
           file: ./devops-qr-code/Node.js/dockerfile.fen
           push: true
-          tags: ${{ secrets.ACR_NAME }}.azurecr.io/front-end-nextjs:latest
+          tags: ${{ env.ACR_NAME }}.azurecr.io/front-end-nextjs:latest
