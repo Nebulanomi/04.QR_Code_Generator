@@ -10,6 +10,7 @@ on:
     workflows: ["Terraform Deployment"]
     types:
       - completed
+
 jobs:
   build-and-push-api:
     runs-on: ubuntu-latest
