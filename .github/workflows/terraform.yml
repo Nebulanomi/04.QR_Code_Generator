@@ -40,6 +40,10 @@ jobs:
 
       - name: Terraform Init
         run: terraform init --upgrade
+            -backend-config="storage_account_name=${{ secrets.STORAGE_ACCOUNT_NAME }}" \
+            -backend-config="container_name=${{ secrets.CONTAINER_NAME }}" \
+            -backend-config="key=${{ secrets.KEY }}" \
+            -backend-config="access_key=${{ secrets.ACCESS_KEY }}"
 
       - name: Terraform Plan
         run: terraform plan -out main.tfplan
