@@ -46,7 +46,7 @@ jobs:
       TF_VAR_url: ${{ secrets.URL }}
 
       # Copy ACR name
-      ACR_NAME: ${{ secrets.$ACR_NAME }}
+      ACR_NAME: ${{ secrets.ACR_NAME }}
 
     steps:
       - name: Checkout
