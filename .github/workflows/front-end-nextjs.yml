@@ -14,8 +14,6 @@ on:
 jobs:
   build-and-push-frontend:
     runs-on: ubuntu-latest
-    env:
-      ACR_NAME: ${{ secrets.ACR_NAME }}  # Use the secret for the ACR name
 
     steps:
       - name: Check out the code
@@ -27,9 +25,9 @@ jobs:
       - name: Log in to Azure Container Registry
         uses: docker/login-action@v2
         with:
-          registry: ${{ env.ACR_NAME }}.azurecr.io
-          username: ${{ secrets.ACR_USERNAME }}
-          password: ${{ secrets.ACR_PASSWORD }}
+          registry: ${{ secrets[env.ACR_NAME] }}.azurecr.io
+          username: ${{ secrets[env.ACR_USERNAME] }}
+          password: ${{ secrets[env.ACR_PASSWORD] }}
 
       - name: Build and push Frontend image
         uses: docker/build-push-action@v4
@@ -37,4 +35,4 @@ jobs:
           context: ./devops-qr-code/Node.js/
           file: ./devops-qr-code/Node.js/dockerfile.fen
           push: true
-          tags: ${{ env.ACR_NAME }}.azurecr.io/front-end-nextjs:latest
+          tags: ${{ secrets[env.ACR_NAME] }}.azurecr.io/front-end-nextjs:latest
