@@ -5,10 +5,10 @@ on:
     branches:
       - main
     paths:
-      - 'terraform/**'
-      - '.github/workflows/terraform.yml'
-    
-  workflow_dispatch:
+      - 'terraform/**'  # Trigger on changes within the terraform directory
+      - '.github/workflows/terraform.yml'  # Trigger on changes to this workflow file
+
+  workflow_dispatch:  # Allow manual triggering of the workflow
 
 jobs:
   terraform:
@@ -17,77 +17,62 @@ jobs:
       run:
         shell: bash
         working-directory: ./terraform
+      
     env:
-          TF_VAR_subscription_id: ${{ secrets.subscription_id }}
-          TF_VAR_client_id: ${{ secrets.client_id }}
-          TF_VAR_client_secret: ${{ secrets.client_secret }}
-          TF_VAR_tenant_id: ${{ secrets.tenant_id }}
-            
-          TF_VAR_resource_group_name: ${{ secrets.RESOURCE_GROUP_NAME }}
-          TF_VAR_storage_account_name: ${{ secrets.STORAGE_ACCOUNT_NAME }}
-          TF_VAR_container_name: ${{ secrets.CONTAINER_NAME }}
-          TF_VAR_key: ${{ secrets.KEY }}
-            
-          #TF_VAR_resource_group_location: "North Europe"
-          TF_VAR_resource_group_name_prefix: "rg"
-            
-          TF_VAR_acrusername: ${{ secrets.ACR_USERNAME }}
-          TF_VAR_acrpassword: ${{ secrets.ACR_PASSWORD }}
-            
-          TF_VAR_url: ${{ secrets.URL }}"
-        
+      # Azure credentials for Terraform
+      TF_VAR_subscription_id: ${{ secrets.SUBSCRIPTION_ID }}
+      TF_VAR_client_id: ${{ secrets.CLIENT_ID }}
+      TF_VAR_client_secret: ${{ secrets.CLIENT_SECRET }}
+      TF_VAR_tenant_id: ${{ secrets.TENANT_ID }}
+
+      # Terraform variables for resource configuration
+      TF_VAR_resource_group_name: ${{ secrets.RESOURCE_GROUP_NAME }}
+      TF_VAR_storage_account_name: ${{ secrets.STORAGE_ACCOUNT_NAME }}
+      TF_VAR_container_name: ${{ secrets.CONTAINER_NAME }}
+      TF_VAR_key: ${{ secrets.KEY }}
+      #TF_VAR_resource_group_name_prefix: "rg"  # Prefix for resource group names
+
+      # Azure Container Registry credentials
+      TF_VAR_acrusername: ${{ secrets.ACR_USERNAME }}
+      TF_VAR_acrpassword: ${{ secrets.ACR_PASSWORD }}
+
+      # Additional configuration
+      TF_VAR_url: ${{ secrets.URL }}
+
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v3  # Check out the repository code
 
       - name: Log in to Azure
-        uses: azure/login@v1
+        uses: azure/login@v1  # Authenticate with Azure using a service principal
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
 
       - name: Setup Terraform
-        uses: hashicorp/setup-terraform@v1
+        uses: hashicorp/setup-terraform@v1  # Set up Terraform CLI
 
-      # Uncomment if you want to check formatting
-      # - name: Terraform Format
-      #   id: fmt
-      #   run: terraform fmt -check
+      - name: Terraform Format
+        id: fmt
+        run: terraform fmt -check  # Check Terraform files for formatting issues
 
       - name: Terraform Init
         id: init
-        env:
-          ARM_CLIENT_ID: ${{ secrets.CLIENT_ID }}
-          ARM_CLIENT_SECRET: ${{ secrets.CLIENT_SECRET }}
-          ARM_SUBSCRIPTION_ID: ${{ secrets.SUBSCRIPTION_ID }}
-          ARM_TENANT_ID: ${{ secrets.TENANT_ID }}
         run: |
           terraform init \
             -backend-config="resource_group_name=${{ secrets.RESOURCE_GROUP_NAME }}" \
             -backend-config="storage_account_name=${{ secrets.STORAGE_ACCOUNT_NAME }}" \
             -backend-config="container_name=${{ secrets.CONTAINER_NAME }}" \
-            -backend-config="key=${{ secrets.KEY }}"
+            -backend-config="key=${{ secrets.KEY }}"  # Initialize Terraform and configure the backend
 
       - name: Terraform Validate
         id: validate
-        env:
-          ARM_CLIENT_ID: ${{ secrets.CLIENT_ID }}
-          ARM_CLIENT_SECRET: ${{ secrets.CLIENT_SECRET }}
-          ARM_SUBSCRIPTION_ID: ${{ secrets.SUBSCRIPTION_ID }}
-          ARM_TENANT_ID: ${{ secrets.TENANT_ID }}
-        run: terraform validate -no-color
+        run: terraform validate -no-color  # Validate the Terraform configuration
 
       - name: Terraform Plan
         id: plan
-        env:
-          ARM_CLIENT_ID: ${{ secrets.CLIENT_ID }}
-          ARM_CLIENT_SECRET: ${{ secrets.CLIENT_SECRET }}
-          ARM_SUBSCRIPTION_ID: ${{ secrets.SUBSCRIPTION_ID }}
-          ARM_TENANT_ID: ${{ secrets.TENANT_ID }}
-        run: terraform plan -no-color -input=false -out=main.tfplan
-        continue-on-error: true
+        run: terraform plan -no-color -input=false -out=main.tfplan  # Create an execution plan
+        continue-on-error: true  # Continue even if the plan step fails
 
       - name: Terraform Apply
-        env:
-          ARM_CLIENT_ID: ${{ secrets.CLIENT_ID }}
-          ARM_CLIENT_SECRET: ${{ secrets.CLIENT_SECRET }}
-        run: terraform apply -auto-approve main.tfplan
+        if: github.ref == 'refs/heads/main' && github.event_name == 'push'  # Only apply on push to main
+        run: terraform apply -auto-approve main.tfplan  # Apply the Terraform plan
