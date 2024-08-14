@@ -1,55 +1,40 @@
+---
 name: Terraform Deployment
-
 on:
   push:
     branches:
       - main
-
-  workflow_dispatch:  # Allows manual triggering of the workflow
-
-env:
-  TF_VAR_api_key: ${{ secrets.API_KEY }}
-  TF_VAR_private_key: ${{ secrets.PRIVATE_KEY }}
-  TF_VAR_url: ${{ secrets.url }}
-
+  workflow_dispatch: null
 jobs:
   terraform:
     runs-on: ubuntu-latest
-
     defaults:
       run:
         shell: bash
         working-directory: ./terraform
-
     steps:
       - name: Checkout
       - uses: actions/checkout@v3
-
       - name: Log in to Azure
         uses: azure/login@v1
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
-
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v1
-
       - name: Terraform Format
         id: fmt
         run: terraform fmt -check
-        
       - name: Terraform Init
         id: init
-        run: terraform init \
-            -backend-config="=resource_group_name${{ secrets.resource_group_name }}" \
-            -backend-config="storage_account_name=${{ secrets.STORAGE_ACCOUNT_NAME }}" \
-            -backend-config="container_name=${{ secrets.CONTAINER_NAME }}" \
-            -backend-config="key=${{ secrets.BACKEND_KEY }}" \
-
+        run: terraform init \ -backend-config="=resource_group_name${{
+          secrets.resource_group_name }}" \
+          -backend-config="storage_account_name=${{ secrets.STORAGE_ACCOUNT_NAME
+          }}" \ -backend-config="container_name=${{ secrets.CONTAINER_NAME }}" \
+          -backend-config="key=${{ secrets.BACKEND_KEY }}" \
       - name: Terraform Validate
         id: validate
         run: terraform validate -no-color
-      
-      - name: Terraform Plan  
+      - name: Terraform Plan
         id: plan
         env:
           CLIENT_ID: ${{ secrets.CLIENT_ID }}
@@ -58,6 +43,5 @@ jobs:
           TENANT_ID: ${{ secrets.TENANT_ID }}
         run: terraform plan -no-color -input=false
         continue-on-error: true
-        
       - name: Terraform Apply
         run: terraform apply main.tfplan -auto-approve
