@@ -82,3 +82,22 @@ jobs:
       - name: Terraform Apply
         if: github.ref == 'refs/heads/main' && github.event_name == 'push'  # Only apply on push to main
         run: terraform apply -auto-approve main.tfplan  # Apply the Terraform plan
+
+      - name: Get ACR Name
+        id: get_acr_name
+        run: echo "ACR_NAME=$(terraform output -raw acr_name)" >> $GITHUB_ENV  # Extract ACR name and set as environment variable
+
+      - name: Install GitHub CLI
+        uses: actions/setup-node@v3
+        with:
+          node-version: '14'
+          
+      - name: Install npm
+        run: npm install -g @actions/github-script
+
+      - name: Update ACR Name Secret
+        env:
+          GH_TOKEN: ${{ secrets.GH_PAT }}
+          ACR_NAME: ${{ env.ACR_NAME }}
+        run: |
+          echo $ACR_NAME | gh secret set ACR_NAME --body -
