@@ -36,14 +36,23 @@ jobs:
 
       - name: Terraform Init
         run: |
-          terraform init \
-            -backend-config="storage_account_name=${{ secrets.STORAGE_ACCOUNT_NAME }}" \
-            -backend-config="container_name=${{ secrets.CONTAINER_NAME }}" \
-            -backend-config="key=${{ secrets.BACKEND_KEY }}" \
-            -backend-config="access_key=${{ secrets.ACCESS_KEY }}"
-
-      - name: Terraform Plan
-        run: terraform plan -out main.tfplan
+         tf_actions_version: 0.12.13
+         tf_actions_subcommand: "init"
+         args: -var=storage_account_name=${{ secrets.STORAGE_ACCOUNT_NAME }}"
+               -var="container_name=${{ secrets.CONTAINER_NAME }}"
+               -var="storage_account_name=${{ secrets.STORAGE_ACCOUNT_NAME }}" 
+               -var="key=${{ secrets.BACKEND_KEY }}" 
+               -var="access_key=${{ secrets.ACCESS_KEY }}"
+    
+      - name: "Terraform Plan"    
+        uses: hashicorp/terraform-github-actions@master
+        with:
+         tf_actions_version: 0.12.13
+         tf_actions_subcommand: "plan"
+         args: -var="client_secret=${{ secrets.clientSecret }}"
+               -var="client_id=${{ secrets.clientId }}"
+               -var="tenant_id=${{ secrets.tenantId }}"
+               -var="sub=${{ secrets.sub }}"
 
       - name: Terraform Apply
         run: terraform apply main.tfplan -auto-approve
