@@ -52,6 +52,12 @@ variable "resource_group_name_prefix" {
 }
 
 # ACR variables
+variable "acr_name_prefix" {
+  type        = string
+  default     = "acr"
+  description = "Prefix of the resource group name that's combined with a random ID so name is unique in your Azure subscription."
+}
+
 variable "acrusername" {
   type        = string
   description = "The admin username for the new cluster."

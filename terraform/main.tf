@@ -17,9 +17,16 @@ resource "azurerm_resource_group" "rg" {
   }
 }
 
+# Create a prefix for the ACR
+resource "random_id" "acr_name" {
+  keepers = {
+    # Generate a new id each time we switch to a new AMI id
+    prefix = var.acr_name_prefix
+  }
+
 # Create ACR
 resource "azurerm_container_registry" "acr" {
-  name                = "aksalextestmetyis"
+  name                = var.random_id.acr_name.id
   resource_group_name = azurerm_resource_group.rg.name
   location            = azurerm_resource_group.rg.location
   sku                 = "Basic"
