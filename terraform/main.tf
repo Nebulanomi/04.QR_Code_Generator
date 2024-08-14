@@ -23,6 +23,7 @@ resource "random_id" "acr_name" {
     # Generate a new id each time we switch to a new AMI id
     prefix = var.acr_name_prefix
   }
+}
 
 # Create ACR
 resource "azurerm_container_registry" "acr" {
