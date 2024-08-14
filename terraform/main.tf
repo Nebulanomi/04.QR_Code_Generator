@@ -18,14 +18,15 @@ resource "azurerm_resource_group" "rg" {
 }
 
 # Create a prefix for the ACR
+
+## Generate a random string for uniqueness
 resource "random_id" "acr_name" {
-  byte_length = 8
+  byte_length = 4
 }
 
 # Create ACR
 resource "azurerm_container_registry" "acr" {
-  name                = "acr" + var.random_id.acr_name.id
-  resource_group_name = azurerm_resource_group.rg.name
+  name                = "acr-${random_id.acr_name.hex}"
   location            = azurerm_resource_group.rg.location
   sku                 = "Basic"
   admin_enabled       = true
