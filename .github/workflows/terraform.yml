@@ -98,6 +98,7 @@ jobs:
           
       - name: Install npm
         run: npm install -g @actions/github-script
+        continue-on-error: true  # Continue even if the plan step fails
 
       - name: Update ACR Name Secret
         env:
