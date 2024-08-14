@@ -24,7 +24,7 @@ jobs:
           TF_VAR_container_name: ${{ secrets.CONTAINER_NAME }}
           TF_VAR_key: ${{ secrets.KEY }}
             
-          TF_VAR_resource_group_location: "West Europe"
+          #TF_VAR_resource_group_location: "North Europe"
           TF_VAR_resource_group_name_prefix: "rg"
             
           TF_VAR_acrusername: ${{ secrets.ACR_USERNAME }}
