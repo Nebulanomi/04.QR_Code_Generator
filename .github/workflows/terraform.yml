@@ -91,6 +91,14 @@ jobs:
         id: get_acr_name
         run: echo "ACR_NAME=$(terraform output -raw acr_name)" >> $ACR_NAME  # Extract ACR name and set as environment variable
 
+      - name: Get ACR username
+        id: get_acr_username
+        run: echo "ACR_USERNAME=$(terraform output -raw acr-admin_username)" >> $ACR_USERNAME  # Extract ACR name and set as environment variable
+
+      - name: Get ACR password
+        id: get_acr_password
+        run: echo "ACR_PASSWORD=$(terraform output -raw acr-admin_password)" >> $ACR_PASSWORD  # Extract ACR name and set as environment variable
+
       - name: Install GitHub CLI
         uses: actions/setup-node@v3
         with:
@@ -106,3 +114,17 @@ jobs:
           ACR_NAME: ${{ env.ACR_NAME }}
         run: |
           echo $ACR_NAME | gh secret set ACR_NAME --body -
+
+      - name: Update ACR Username Secret
+        env:
+          GH_TOKEN: ${{ secrets.GH_PAT }}
+          ACR_NAME: ${{ env.ACR_USERNAME }}
+        run: |
+          echo $ACR_USERNAME | gh secret set ACR_USERNAME --body -
+
+      - name: Update ACR Password Secret
+        env:
+          GH_TOKEN: ${{ secrets.GH_PAT }}
+          ACR_PASSWORD: ${{ env.ACR_PASSWORD }}
+        run: |
+          echo $ACR_PASSWORD | gh secret set ACR_PASSWORD --body -
