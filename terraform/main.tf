@@ -7,7 +7,7 @@ resource "random_pet" "rg_name" {
 resource "azurerm_resource_group" "rg" {
   location = var.resource_group_location
   name     = random_pet.rg_name.id
-  tags     = {
+  tags = {
     "Budget"              = "10€",
     "Data classification" = "Private",
     "End date"            = "Never",
@@ -62,8 +62,8 @@ resource "azurerm_kubernetes_cluster" "aks" {
   }
 
   network_profile {
-  network_plugin    = "kubenet"
-  load_balancer_sku = "standard"
+    network_plugin    = "kubenet"
+    load_balancer_sku = "standard"
   }
 }
 
@@ -96,16 +96,16 @@ resource "azurerm_kubernetes_flux_configuration" "aks-fc" {
   namespace  = "qr-app"
 
   git_repository {
-    url              = var.url
-    reference_type   = var.reference_type
-    reference_value  = var.reference_value
+    url             = var.url
+    reference_type  = var.reference_type
+    reference_value = var.reference_value
   }
 
-    kustomizations {
+  kustomizations {
     name = "kustomization-git"
   }
 
-    depends_on = [
+  depends_on = [
     azurerm_kubernetes_cluster_extension.aks-ext
-    ]
+  ]
 }

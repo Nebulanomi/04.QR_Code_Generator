@@ -17,8 +17,8 @@ output "acr-admin_username" {
 }
 
 output "acr-admin_password" {
-  value = azurerm_container_registry.acr.admin_password
-  sensitive   = true
+  value     = azurerm_container_registry.acr.admin_password
+  sensitive = true
 }
 
 # Output AKS

@@ -1,18 +1,18 @@
 # Backed storage account
 variable "resource_group_name" {
-  type        = string
+  type = string
 }
 
 variable "storage_account_name" {
-  type        = string
+  type = string
 }
 
 variable "container_name" {
-  type        = string
+  type = string
 }
 
 variable "key" {
-  type        = string
+  type = string
 }
 
 
@@ -76,15 +76,15 @@ variable "username" {
 
 # Git variables
 variable "url" {
-  type        = string
+  type = string
 }
 
 variable "reference_type" {
-  default     = "branch"
-  type        = string
+  default = "branch"
+  type    = string
 }
 
 variable "reference_value" {
-  default     = "main"
-  type        = string
+  default = "main"
+  type    = string
 }
