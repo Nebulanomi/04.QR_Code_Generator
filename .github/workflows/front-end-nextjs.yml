@@ -15,7 +15,7 @@ jobs:
   build-and-push-frontend:
     runs-on: ubuntu-latest
     env:
-      ACR_USER: ${{ secrets.ACR_NAME }}
+      ACR_NAME: ${{ secrets.ACR_NAME }}
       ACR_USERNAME: ${{ secrets.ACR_USERNAME }}
       ACR_PASSWORD: ${{ secrets.ACR_PASSWORD }}
 
