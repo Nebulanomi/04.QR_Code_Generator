@@ -26,7 +26,7 @@ terraform {
     resource_group_name  = "rg-tfstate"
     storage_account_name = "satsstoragealex"
     container_name       = "tfstate"
-    key                  = "NiRMJ4RbraIVVEcbUW7R9aI1CpexJRl+YV9bouDZZzuu/LtGX3EgbHWdcbA9F1spSe16zTkWL2rW+AStnETCPw=="
+    key                  = ""
 }
 }
 
