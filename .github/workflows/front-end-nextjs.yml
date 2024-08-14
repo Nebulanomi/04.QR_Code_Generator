@@ -16,6 +16,8 @@ jobs:
     runs-on: ubuntu-latest
     env:
       ACR_USER: ${{ secrets.ACR_NAME }}
+      ACR_USERNAME: ${{ secrets.ACR_USERNAME }}
+      ACR_PASSWORD: ${{ secrets.ACR_PASSWORD }}
 
     steps:
       - name: Check out the code
