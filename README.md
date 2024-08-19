@@ -50,6 +50,8 @@ Steps​:
 
 Order of execution in Github actions:
 
-    1. Terraform script (To create the environment in Azure).
-    2. Dockerfiles (For the YAML file to use).
-    3. YAML scripts (To deploy the containers to ACR & pods to AKS).
+    1. Run terraform script (To create the environment in Azure).
+    2. Go to the Azure portal -> the new ACR created.
+    3. Copy the registry name, username and password.
+    4. Add the ACR information to github secrets and kubernetes deployment YAML files.
+    5. Run api and node.js YAML files.
