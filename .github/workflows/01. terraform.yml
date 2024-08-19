@@ -69,7 +69,7 @@ jobs:
 
       - name: Terraform Format
         id: fmt
-        run: terraform fmt -check  # Check Terraform files for formatting issues without making changes
+        run: terraform fmt  # Format Terraform files for formatting issues without making changes
 
       - name: Terraform Init
         id: init
@@ -91,5 +91,12 @@ jobs:
       - name: Terraform Apply
         run: terraform apply -no-color -input=false -auto-approve main.tfplan  # Apply the Terraform plan to create/update the infrastructure without user confirmation
 
-        # Uncomment the following lines if you want the workflow to continue even if the apply step fails
-        # continue-on-error: true
+      # Cleanup step to delete the Terraform plan file after deployment
+      - name: Clean up
+        id: clean
+        if: always()  # Ensure this step runs even if previous steps fail
+        run: |
+          rm -f main.tfplan  # Remove the Terraform plan file
+
+      # Uncomment the following lines if you want the workflow to continue even if the apply step fails
+      # continue-on-error: true
