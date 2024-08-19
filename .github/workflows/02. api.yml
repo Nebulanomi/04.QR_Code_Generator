@@ -3,7 +3,7 @@ name: 02. Build and Push API Image
 on:
   push:
     paths:
-      - '03. QR_code_app/api/**'  # Trigger the workflow if any file in the API directory changes
+      - '03. QR_code_app/FastAPI/**'  # Trigger the workflow if any file in the API directory changes
 
   workflow_dispatch:  # Allows manual triggering of the workflow
   # workflow_run:
@@ -42,10 +42,10 @@ jobs:
       - name: Build and push API Docker image
         uses: docker/build-push-action@v2
         with:
-          context: ./03. QR_code_app/api/'  # Directory containing Dockerfile and application files
-          file: ./03. QR_code_app/api/Dockerfile'  # Path to the Dockerfile
+          context: ./03. QR_code_app/FastAPI/'  # Directory containing Dockerfile and application files
+          file: ./03. QR_code_app/FastAPI/Dockerfile'  # Path to the Dockerfile
           push: true  # Push the built image to the Azure Container Registry
-          tags: ${{ env.ACR_NAME }}.azurecr.io/api:latest  # Tag for the Docker image
+          tags: ${{ env.ACR_NAME }}.azurecr.io/FastAPI:latest  # Tag for the Docker image
 
       - name: Verify Docker Image
         run: |
