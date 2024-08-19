@@ -19,7 +19,7 @@ resource "azurerm_resource_group" "rg" {
 
 # Create a prefix for the ACR
 resource "random_id" "acr_name" {
-  byte_length = 4   # Generate a random string for uniqueness
+  byte_length = 4 # Generate a random string for uniqueness
 }
 
 # Create ACR
@@ -47,7 +47,7 @@ resource "azurerm_kubernetes_cluster" "aks" {
   dns_prefix          = random_pet.azurerm_kubernetes_cluster_dns_prefix.id
   location            = azurerm_resource_group.rg.location
   resource_group_name = azurerm_resource_group.rg.name
-  
+
   identity {
     type = "SystemAssigned"
   }
@@ -57,7 +57,7 @@ resource "azurerm_kubernetes_cluster" "aks" {
     node_count = var.node_count
     vm_size    = "Standard_D2_v2"
   }
-  
+
   network_profile {
     network_plugin    = "kubenet"
     load_balancer_sku = "standard"

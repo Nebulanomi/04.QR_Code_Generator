@@ -3,17 +3,17 @@
 ## Backend storage account 
 variable "resource_group_name" {
   description = "The Azure Resource Group"
-  type = string
+  type        = string
 }
 
 variable "storage_account_name" {
-    description = "The Azure Storage Account"
-  type = string
+  description = "The Azure Storage Account"
+  type        = string
 }
 
 variable "container_name" {
-    description = "The Azure Storage Account Container"
-  type = string
+  description = "The Azure Storage Account Container"
+  type        = string
 }
 
 variable "key" {
