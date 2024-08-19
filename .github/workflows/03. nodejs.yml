@@ -43,7 +43,7 @@ jobs:
         uses: docker/build-push-action@v4
         with:
           context: './QR_code_app/nodejs/'  # Directory containing Dockerfile and application files
-          file: './QR_code_app/nodejs/Dockerfile'  # Path to the Dockerfile
+          file: './QR_code_app/nodejs/dockerfile'  # Path to the Dockerfile
           push: true  # Push the built image to the Azure Container Registry
           tags: ${{ env.ACR_NAME }}.azurecr.io/nodejs:latest  # Tag for the Docker image
 
