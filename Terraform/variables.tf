@@ -71,5 +71,5 @@ variable "node_count" {
 ## Github repo url
 variable "url" {
   default = "https://github.com/Nebulanomi/04.QR_Code_Generator"
-  type = string
+  type    = string
 }
