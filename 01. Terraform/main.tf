@@ -53,7 +53,7 @@ resource "azurerm_kubernetes_cluster" "aks" {
   }
 
   default_node_pool {
-    name       = "qr-app_node-pool"
+    name       = "qrapppool"
     node_count = var.node_count
     vm_size    = "Standard_D2_v2"
   }
