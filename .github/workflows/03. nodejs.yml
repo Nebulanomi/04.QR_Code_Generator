@@ -34,13 +34,11 @@ jobs:
         # with:
         #   drivers: [docker]
 
-      - name: Log in to Azure Container Registry
-        id: acr
-        uses: docker/login-action@v2
+      - name: Log in to Azure
+        id: log-in
+        uses: azure/login@v2  # Authenticate with Azure using a service principal
         with:
-          registry: ${{ env.ACR_NAME }}.azurecr.io  # URL of the Azure Container Registry
-          username: ${{ env.ACR_USERNAME }}         # Username for Azure Container Registry
-          password: ${{ env.ACR_PASSWORD }}         # Password for Azure Container Registry
+          creds: ${{ secrets.AZURE_CREDENTIALS }}  # JSON credentials for Azure authentication
 
       - name: Azure CLI script
         id: cli
@@ -48,7 +46,15 @@ jobs:
         with:
           azcliversion: latest  # Use the latest version of Azure CLI
           inlineScript: |
-            az account show  # Display information about the current Azure subscription  
+            az account show  # Display information about the current Azure subscription
+
+      - name: Log in to Azure Container Registry
+        id: acr
+        uses: docker/login-action@v2
+        with:
+          registry: ${{ env.ACR_NAME }}.azurecr.io  # URL of the Azure Container Registry
+          username: ${{ env.ACR_USERNAME }}         # Username for Azure Container Registry
+          password: ${{ env.ACR_PASSWORD }}         # Password for Azure Container Registry
 
       - name: Build and push Frontend Docker image
         id: push
