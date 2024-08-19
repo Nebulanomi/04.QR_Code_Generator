@@ -93,8 +93,8 @@ resource "azurerm_kubernetes_flux_configuration" "aks-fc" {
 
   kustomizations {
     name          = "git"
-    path          = "https://github.com/Nebulanomi/04.QR_Code_Generator/AKS_YAML" # Adjust to the appropriate path in your repository
-    sync_interval = "1m"                                                          # Set sync interval to 1 minute
+    path          = "/AKS_YAML" # Adjust to the appropriate path in your repository
+    sync_interval_in_seconds = "60"                                                          # Set sync interval to 1 minute
   }
 
   depends_on = [
