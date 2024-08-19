@@ -1,4 +1,4 @@
-name: Build and Push API Image
+name: 02. Build and Push API Image
 
 on:
   push:

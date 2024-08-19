@@ -1,4 +1,4 @@
-name: Build and Push Front-end Image
+name: 03. Build and Push Front-end Image
 
 on:
   push:
