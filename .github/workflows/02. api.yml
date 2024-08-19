@@ -49,5 +49,5 @@ jobs:
 
       - name: Verify Docker Image
         run: |
-          docker pull ${{ env.ACR_NAME }}.azurecr.io/api:latest  # Pull the latest image to verify it exists
-          docker images | grep api  # List Docker images to confirm the build
+          docker pull ${{ env.ACR_NAME }}.azurecr.io/FastAPI:latest  # Pull the latest image to verify it exists
+          docker images | grep FastAPI  # List Docker images to confirm the build
