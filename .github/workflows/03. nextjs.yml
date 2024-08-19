@@ -1,0 +1,53 @@
+name: Build and Push Front-end Image
+
+on:
+  push:
+    paths:
+      - 'devops-qr-code/front-end-nextjs/**'  # Trigger the workflow if any file in the front-end directory changes
+
+  workflow_dispatch:  # Allows manual triggering of the workflow
+  # workflow_run:
+    # workflows: ["Terraform Deployment"]
+    # types:
+      # - completed
+
+jobs:
+  build-and-push-frontend:
+    runs-on: ubuntu-latest
+
+    env:
+      ACR_NAME: ${{ secrets.ACR_NAME }}           # Azure Container Registry name
+      ACR_USERNAME: ${{ secrets.ACR_USERNAME }}   # Azure Container Registry username
+      ACR_PASSWORD: ${{ secrets.ACR_PASSWORD }}   # Azure Container Registry password
+
+    steps:
+      - name: Check out the code
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0  # Fetch full history for accurate context and potential debugging
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+        # Optionally configure buildx options if necessary
+        # with:
+        #   drivers: [docker]
+
+      - name: Log in to Azure Container Registry
+        uses: docker/login-action@v2
+        with:
+          registry: ${{ env.ACR_NAME }}.azurecr.io  # URL of the Azure Container Registry
+          username: ${{ env.ACR_USERNAME }}         # Username for Azure Container Registry
+          password: ${{ env.ACR_PASSWORD }}         # Password for Azure Container Registry
+
+      - name: Build and push Frontend Docker image
+        uses: docker/build-push-action@v4
+        with:
+          context: ./devops-qr-code/front-end-nextjs/  # Directory containing Dockerfile and application files
+          file: ./devops-qr-code/front-end-nextjs/Dockerfile  # Path to the Dockerfile
+          push: true  # Push the built image to the Azure Container Registry
+          tags: ${{ env.ACR_NAME }}.azurecr.io/front-end-nextjs:latest  # Tag for the Docker image
+
+      - name: Verify Docker Image
+        run: |
+          docker pull ${{ env.ACR_NAME }}.azurecr.io/front-end-nextjs:latest  # Pull the latest image to verify it exists
+          docker images | grep front-end-nextjs  # List Docker images to confirm the build

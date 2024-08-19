@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: nextjs-deployment            # Name of the deployment
-  namespace: qr-app                  # Name of the namespace
+  namespace: default                  # Name of the namespace
   labels:
     app: nextjs                      # Label to identify the deployment
     
@@ -18,7 +18,7 @@ spec:
     spec:
       containers:
       - name: nextjs               # Container name
-        image: acra1fa91b3.azurecr.io/front-end-nextjs:latest  # Docker image from Azure Container Registry
+        image: ${{ env.ACR_NAME }}.azurecr.io/front-end-nextjs:latest  # Docker image from Azure Container Registry
         ports:
         - containerPort: 3000       # Port the container exposes
         env:

@@ -3,7 +3,7 @@ kind: Service
 
 metadata:
   name: fastapi-service             # Name of the service
-  namespace: qr-app                  # Name of the namespace
+  namespace: default                  # Name of the namespace
   labels:
     app: fastapi                    # Label to identify the service
     
