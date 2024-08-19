@@ -18,7 +18,7 @@ spec:
     spec:
       containers:
       - name: nextjs               # Container name
-        image: ${{ env.ACR_NAME }}.azurecr.io/front-end-nextjs:latest  # Docker image from Azure Container Registry
+        image: acr7b094649.azurecr.io/nodejs:latest  # Docker image from Azure Container Registry
         ports:
         - containerPort: 3000       # Port the container exposes
         env:
