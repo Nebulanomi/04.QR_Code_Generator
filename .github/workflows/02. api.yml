@@ -45,9 +45,9 @@ jobs:
           context: ./03. QR_code_app/FastAPI/'  # Directory containing Dockerfile and application files
           file: ./03. QR_code_app/FastAPI/Dockerfile'  # Path to the Dockerfile
           push: true  # Push the built image to the Azure Container Registry
-          tags: ${{ env.ACR_NAME }}.azurecr.io/FastAPI:latest  # Tag for the Docker image
+          tags: ${{ env.ACR_NAME }}.azurecr.io/fastapi:latest  # Tag for the Docker image
 
       - name: Verify Docker Image
         run: |
-          docker pull ${{ env.ACR_NAME }}.azurecr.io/FastAPI:latest  # Pull the latest image to verify it exists
-          docker images | grep FastAPI  # List Docker images to confirm the build
+          docker pull ${{ env.ACR_NAME }}.azurecr.io/fastapi:latest  # Pull the latest image to verify it exists
+          docker images | grep fastapi  # List Docker images to confirm the build
