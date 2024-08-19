@@ -38,13 +38,6 @@ jobs:
       TF_VAR_container_name: ${{ secrets.CONTAINER_NAME }}  # Container name in the storage account for Terraform state
       TF_VAR_key: ${{ secrets.KEY }}  # Key for the Terraform state file
 
-      # Azure Container Registry credentials
-      TF_VAR_acrusername: ${{ secrets.ACR_USERNAME }}  # Username for Azure Container Registry
-      TF_VAR_acrpassword: ${{ secrets.ACR_PASSWORD }}  # Password for Azure Container Registry
-
-      # Additional configuration
-      TF_VAR_url: ${{ secrets.URL }}  # URL for additional configuration or endpoints
-
     steps:
       - name: Checkout
         id: checkout

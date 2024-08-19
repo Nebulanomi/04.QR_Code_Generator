@@ -61,18 +61,6 @@ variable "resource_group_location" {
   description = "Location of the resource group."
 }
 
-## ACR variables
-#variable "acrusername" {
-#  type        = string
-#  description = "The admin username for the new cluster."
-#}
-
-#variable "acrpassword" {
-#  type        = string
-#  description = "The admin username for the new cluster."
-#  sensitive   = true
-#}
-
 ## AKS variables
 variable "node_count" {
   type        = number
@@ -80,7 +68,8 @@ variable "node_count" {
   default     = 1
 }
 
-# Github repo url
+## Github repo url
 variable "url" {
+  default = "https://github.com/Nebulanomi/04.QR_Code_Generator"
   type = string
 }
