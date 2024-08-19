@@ -3,7 +3,7 @@ name: 03. Build and Push Front-end Image
 on:
   push:
     paths:
-      - '03. QR_code_app/front-end-nextjs/**'  # Trigger the workflow if any file in the front-end directory changes
+      - '03. QR_code_app/Node.js/**'  # Trigger the workflow if any file in the front-end directory changes
 
   workflow_dispatch:  # Allows manual triggering of the workflow
   # workflow_run:
@@ -42,12 +42,12 @@ jobs:
       - name: Build and push Frontend Docker image
         uses: docker/build-push-action@v4
         with:
-          context: '.03. QR_code_app/front-end-nextjs/'  # Directory containing Dockerfile and application files
-          file: './03. QR_code_app/front-end-nextjs/Dockerfile'  # Path to the Dockerfile
+          context: '.03. QR_code_app/Node.js/'  # Directory containing Dockerfile and application files
+          file: './03. QR_code_app/Node.js/Dockerfile'  # Path to the Dockerfile
           push: true  # Push the built image to the Azure Container Registry
           tags: ${{ env.ACR_NAME }}.azurecr.io/front-end-nextjs:latest  # Tag for the Docker image
 
       - name: Verify Docker Image
         run: |
-          docker pull ${{ env.ACR_NAME }}.azurecr.io/front-end-nextjs:latest  # Pull the latest image to verify it exists
-          docker images | grep front-end-nextjs  # List Docker images to confirm the build
+          docker pull ${{ env.ACR_NAME }}.azurecr.io/Node.js:latest  # Pull the latest image to verify it exists
+          docker images | grep Node.js  # List Docker images to confirm the build
