@@ -3,7 +3,7 @@ name: 02. Build and Push API Image
 on:
   push:
     paths:
-      - './QR_code_app/api/**'  # Trigger the workflow if any file in the API directory changes
+      - 'QR_code_app/api/**'  # Trigger the workflow if any file in the API directory changes
 
   workflow_dispatch:  # Allows manual triggering of the workflow
   # workflow_run:

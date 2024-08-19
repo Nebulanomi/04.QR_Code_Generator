@@ -3,7 +3,7 @@ name: 03. Build and Push Front-end Image
 on:
   push:
     paths:
-      - './QR_code_app/nodejs/**'  # Trigger the workflow if any file in the front-end directory changes
+      - 'QR_code_app/nodejs/**'  # Trigger the workflow if any file in the front-end directory changes
 
   workflow_dispatch:  # Allows manual triggering of the workflow
   # workflow_run:
