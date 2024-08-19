@@ -10,7 +10,7 @@ jobs:
     defaults:
       run:
         shell: bash  # Set the default shell to bash
-        working-directory: './01. Terraform'  # Set default working directory for all steps
+        working-directory: './Terraform'  # Set default working directory for all steps
 
     env:
       # Azure credentials for Terraform
